@@ -88,14 +88,94 @@ export interface Contact {
   tldStatus: string
   postalCode: string
   sfFormReceived: string
-  documentCollectionResolved: string
   outreachSentCount: number
-  sfRemarketingResolved: string
-  oePremiumIncrease25kResolved: string
-  sfRemarketingInboundCall: string
-  sfRemarketingTriggerLinkClicked: string
-  documentCollectionFormReceived: string
   opportunityDistribution: string
+
+  // ─── Retention issue fields ───────────────────────────────────────────────
+  // Document Collection
+  documentCollectionResolved: string
+  documentCollectionFormReceived: string
+  documentCollectionResponseReceived: string
+  documentCollectionTriggerLinkClicked: string
+  documentCollectionInboundCall: string
+  documentCollectionOutreachSentCount: number
+  documentCollectionOutreachSentDate: string
+  documentCollectionSplit: string
+
+  // OE Premium Increase (excluded from Retention UI but kept for data completeness)
+  oePremiumIncrease25kResolved: string
+
+  // SF Remarketing
+  sfRemarketingResolved: string
+  sfRemarketingFormReceived: string
+  sfRemarketingResponseReceived: string
+  sfRemarketingTriggerLinkClicked: string
+  sfRemarketingInboundCall: string
+  sfRemarketingOutreachSentCount: number
+  sfRemarketingOutreachSentDate: string
+  sfRemarketingSplit: string
+  sfOutreachSentCount: number
+  sfOutreachSentDate: string
+  sfSplit: string
+
+  // Landline
+  landlineResolved: string
+  landlineFormReceived: string
+  landlineResponseReceived: string
+  landlineTriggerLinkClicked: string
+  landlineInboundCall: string
+  landlineOutreachSentCount: number
+  landlineOutreachSentDate: string
+  landlineSplit: string
+
+  // Lander Mismatch
+  landerMismatchResolved: string
+  landerMismatchResponseReceived: string
+  landerMismatchTriggerLinkClicked: string
+  landerMismatchInboundCall: string
+  landerMismatchOutreachSentCount: number
+  landerMismatchOutreachSentDate: string
+  landerMismatchSplit: string
+
+  // Cancelled Client
+  cancelledClientResolved: string
+  cancelledClientFormReceived: string
+  cancelledClientResponseReceived: string
+  cancelledClientTriggerLinkClicked: string
+  cancelledClientInboundCall: string
+  cancelledClientOutreachSentCount: number
+  cancelledClientOutreachSentDate: string
+  cancelledClientOutreachSentDate2: string
+  cancelledClientSplit: string
+
+  // Qualification
+  qualificationResolved: string
+  qualificationFormReceived: string
+  qualificationResponseReceived: string
+  qualificationTriggerLinkClicked: string
+  qualificationInboundCall: string
+  qualificationOutreachSentCount: number
+  qualificationOutreachSentDate: string
+  qualificationSplit: string
+
+  // DMI
+  dmiPostSaleOutreachSentCount: number
+  dmiPreSaleOutreachSentCount: number
+
+  // AOR Recovery
+  aorRecoveryOutreachSentCount: number
+
+  // Misc retention
+  medicaidRemarketing: string
+  medicaidRemarketingOutreachSentCount: number
+  premiumCollectionFormReceived: string
+  premiumCollectionOutreachSentCount: number
+  premiumCollectionOutreachSentDate: string
+  premiumCollectionSplit: string
+  assistedLinkOutreachSentCount: number
+  updateSpouseDependentSsn: string
+  oeUnpaidBinderOutreachSentCount: number
+  otherPartyOutreachSentCount: number
 }
 
 // ─── Derived / Aggregated Types for Dashboard ────────────────────────────────
@@ -151,6 +231,27 @@ export interface DashboardData {
   metalLevels: PlanMetalLevel[]
   agentPerformance: AgentPerformance[]
   stateBreakdown: StateBreakdown[]
+}
+
+export interface RetentionIssue {
+  category: string
+  total: number
+  resolved: number
+  outreachSent: number
+  formReceived: number
+  inboundCall: number
+  resolutionRate: number
+}
+
+export interface RetentionContact {
+  contactId: string
+  firstName: string
+  lastName: string
+  status: string
+  retentionAgent: string
+  issues: string[]
+  outreachSentCount: number
+  resubmissionCount: number
 }
 
 export type DateRange = '7d' | '30d' | '90d' | '12m' | 'ytd'

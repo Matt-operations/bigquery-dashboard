@@ -8,8 +8,73 @@
 
 import type { Contact } from '../types'
 
+const retentionDefaults: Omit<Contact,
+  'contactId'|'firstName'|'lastName'|'phone'|'email'|'created'|'lastActivity'|'state'|'householdSize'|
+  'existingPlanCarrier'|'existingPlanPremium'|'suggestedCarrier'|'suggestedPlanName'|'suggestedPlanEffectiveDate'|
+  'suggestedPlanPremium'|'suggestedPlanGrossPremium'|'digiBACAConvertedIdentifier'|'salesTagsDropDown'|
+  'actionNeededItem'|'primaryDMINonCoverage'|'primaryDMICoverage'|'sepOEUsedOnApplication'|'customerApplicationId'|
+  'effectiveDate'|'annualIncomeUsedOnApp'|'householdSizeUsedOnApp'|'selectedPlanIssuerName'|'selectedPlanName'|
+  'selectedPlanPremiumWithCredit'|'selectedPlanPremium'|'submissionDate'|'householdIncomeEst2026'|'primaryDob'|
+  'primaryPostalCode'|'primaryCounty'|'deviceType'|'primaryGender'|'primaryUsCitizen'|'currentInsurance'|
+  'spouseDateOfBirth'|'householdSize2026'|'medicaidOutreachCount'|'status'|'updated'|'converted'|
+  'resubmissionCount'|'retentionAgent'|'originalAssignedAgent'|'originalRetentionAgent'|'temporaryRetentionAgent'|
+  'pendingConversionDate'|'dmiProofUploadedDate'|'customerServiceAgent'|'selectedPlanMetalLevel'|'selectedPlanType'|
+  'primaryDobAge'|'segment'|'utmSource'|'utmCampaign'|'utmKeyword'|'utmMatchtype'|'utmMedium'|'utmDevice'|
+  'utmLocation'|'fbclid'|'clickId'|'gclickid'|'campaignId'|'adGroupId'|'adId'|'vendorSource'|'dataVariant'|
+  'affsub'|'affsub1'|'affsub2'|'affsub3'|'subId'|'utmGhl'|'shortFormAttribution'|'additionalServices'|
+  'companyName'|'opportunities'|'tldStatus'|'postalCode'|'sfFormReceived'|'documentCollectionResolved'|
+  'outreachSentCount'|'sfRemarketingResolved'|'oePremiumIncrease25kResolved'|'sfRemarketingInboundCall'|
+  'sfRemarketingTriggerLinkClicked'|'documentCollectionFormReceived'|'opportunityDistribution'
+> = {
+  documentCollectionResponseReceived: '', documentCollectionTriggerLinkClicked: '', documentCollectionInboundCall: '',
+  documentCollectionOutreachSentCount: 0, documentCollectionOutreachSentDate: '', documentCollectionSplit: '',
+  sfRemarketingFormReceived: '', sfRemarketingResponseReceived: '',
+  sfRemarketingOutreachSentCount: 0, sfRemarketingOutreachSentDate: '', sfRemarketingSplit: '',
+  sfOutreachSentCount: 0, sfOutreachSentDate: '', sfSplit: '',
+  landlineResolved: '', landlineFormReceived: '', landlineResponseReceived: '', landlineTriggerLinkClicked: '',
+  landlineInboundCall: '', landlineOutreachSentCount: 0, landlineOutreachSentDate: '', landlineSplit: '',
+  landerMismatchResolved: '', landerMismatchResponseReceived: '', landerMismatchTriggerLinkClicked: '',
+  landerMismatchInboundCall: '', landerMismatchOutreachSentCount: 0, landerMismatchOutreachSentDate: '', landerMismatchSplit: '',
+  cancelledClientResolved: '', cancelledClientFormReceived: '', cancelledClientResponseReceived: '',
+  cancelledClientTriggerLinkClicked: '', cancelledClientInboundCall: '', cancelledClientOutreachSentCount: 0,
+  cancelledClientOutreachSentDate: '', cancelledClientOutreachSentDate2: '', cancelledClientSplit: '',
+  qualificationResolved: '', qualificationFormReceived: '', qualificationResponseReceived: '',
+  qualificationTriggerLinkClicked: '', qualificationInboundCall: '', qualificationOutreachSentCount: 0,
+  qualificationOutreachSentDate: '', qualificationSplit: '',
+  dmiPostSaleOutreachSentCount: 0, dmiPreSaleOutreachSentCount: 0,
+  aorRecoveryOutreachSentCount: 0,
+  medicaidRemarketing: '', medicaidRemarketingOutreachSentCount: 0,
+  premiumCollectionFormReceived: '', premiumCollectionOutreachSentCount: 0,
+  premiumCollectionOutreachSentDate: '', premiumCollectionSplit: '',
+  assistedLinkOutreachSentCount: 0, updateSpouseDependentSsn: '',
+  oeUnpaidBinderOutreachSentCount: 0, otherPartyOutreachSentCount: 0,
+}
+
+function c(contact: Omit<Contact,
+  'documentCollectionResponseReceived'|'documentCollectionTriggerLinkClicked'|'documentCollectionInboundCall'|
+  'documentCollectionOutreachSentCount'|'documentCollectionOutreachSentDate'|'documentCollectionSplit'|
+  'sfRemarketingFormReceived'|'sfRemarketingResponseReceived'|'sfRemarketingOutreachSentCount'|
+  'sfRemarketingOutreachSentDate'|'sfRemarketingSplit'|'sfOutreachSentCount'|'sfOutreachSentDate'|'sfSplit'|
+  'landlineResolved'|'landlineFormReceived'|'landlineResponseReceived'|'landlineTriggerLinkClicked'|
+  'landlineInboundCall'|'landlineOutreachSentCount'|'landlineOutreachSentDate'|'landlineSplit'|
+  'landerMismatchResolved'|'landerMismatchResponseReceived'|'landerMismatchTriggerLinkClicked'|
+  'landerMismatchInboundCall'|'landerMismatchOutreachSentCount'|'landerMismatchOutreachSentDate'|'landerMismatchSplit'|
+  'cancelledClientResolved'|'cancelledClientFormReceived'|'cancelledClientResponseReceived'|
+  'cancelledClientTriggerLinkClicked'|'cancelledClientInboundCall'|'cancelledClientOutreachSentCount'|
+  'cancelledClientOutreachSentDate'|'cancelledClientOutreachSentDate2'|'cancelledClientSplit'|
+  'qualificationResolved'|'qualificationFormReceived'|'qualificationResponseReceived'|
+  'qualificationTriggerLinkClicked'|'qualificationInboundCall'|'qualificationOutreachSentCount'|
+  'qualificationOutreachSentDate'|'qualificationSplit'|
+  'dmiPostSaleOutreachSentCount'|'dmiPreSaleOutreachSentCount'|'aorRecoveryOutreachSentCount'|
+  'medicaidRemarketing'|'medicaidRemarketingOutreachSentCount'|'premiumCollectionFormReceived'|
+  'premiumCollectionOutreachSentCount'|'premiumCollectionOutreachSentDate'|'premiumCollectionSplit'|
+  'assistedLinkOutreachSentCount'|'updateSpouseDependentSsn'|'oeUnpaidBinderOutreachSentCount'|'otherPartyOutreachSentCount'
+>): Contact {
+  return { ...retentionDefaults, ...contact }
+}
+
 export const contacts: Contact[] = [
-  {
+  c({
     contactId: 'C001', firstName: 'Jordan', lastName: 'Alvarez', phone: '555-0101', email: 'j.alvarez@example.com',
     created: '2026-01-03', lastActivity: '2026-01-14', state: 'FL', householdSize: 3,
     existingPlanCarrier: 'BlueCross', existingPlanPremium: 420,
@@ -29,9 +94,9 @@ export const contacts: Contact[] = [
     fbclid: '', clickId: 'gc001', gclickid: 'gclid_001', campaignId: 'C_FL_01', adGroupId: 'AG_01', adId: 'AD_001',
     vendorSource: 'Google Ads', dataVariant: 'A', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: 'short',
     additionalServices: '', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '33101',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 1, sfRemarketingResolved: '', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 1, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C002', firstName: 'Taylor', lastName: 'Brooks', phone: '555-0102', email: 't.brooks@example.com',
     created: '2026-01-05', lastActivity: '2026-01-18', state: 'TX', householdSize: 1,
     existingPlanCarrier: '', existingPlanPremium: null,
@@ -51,9 +116,9 @@ export const contacts: Contact[] = [
     fbclid: 'fb_002', clickId: '', gclickid: '', campaignId: 'C_TX_01', adGroupId: 'AG_02', adId: 'AD_002',
     vendorSource: 'Facebook Ads', dataVariant: 'B', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: '',
     additionalServices: '', companyName: '', opportunities: '', tldStatus: 'Pending', postalCode: '78201',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'No', outreachSentCount: 2, sfRemarketingResolved: '', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: 'Yes', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'No', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'Yes', documentCollectionResolved: 'No', outreachSentCount: 2, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: 'Yes', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'No', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C003', firstName: 'Morgan', lastName: 'Chen', phone: '555-0103', email: 'm.chen@example.com',
     created: '2026-01-08', lastActivity: '2026-01-22', state: 'FL', householdSize: 4,
     existingPlanCarrier: 'Aetna', existingPlanPremium: 680,
@@ -73,9 +138,9 @@ export const contacts: Contact[] = [
     fbclid: '', clickId: 'gc003', gclickid: 'gclid_003', campaignId: 'C_FL_02', adGroupId: 'AG_03', adId: 'AD_003',
     vendorSource: 'Google Ads', dataVariant: 'A', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: 'short',
     additionalServices: 'Dental', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '32801',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: 'Yes', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: 'Yes', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: 'Yes', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: 'Yes', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C004', firstName: 'Riley', lastName: 'Davis', phone: '555-0104', email: 'r.davis@example.com',
     created: '2026-01-10', lastActivity: '2026-01-25', state: 'GA', householdSize: 2,
     existingPlanCarrier: 'Cigna', existingPlanPremium: 520,
@@ -95,9 +160,9 @@ export const contacts: Contact[] = [
     fbclid: '', clickId: '', gclickid: '', campaignId: '', adGroupId: '', adId: '',
     vendorSource: 'Direct', dataVariant: '', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: '',
     additionalServices: '', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '30301',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C005', firstName: 'Avery', lastName: 'Flores', phone: '555-0105', email: 'a.flores@example.com',
     created: '2026-01-12', lastActivity: '2026-01-28', state: 'FL', householdSize: 5,
     existingPlanCarrier: '', existingPlanPremium: null,
@@ -117,9 +182,9 @@ export const contacts: Contact[] = [
     fbclid: 'fb_005', clickId: '', gclickid: '', campaignId: 'C_FL_03', adGroupId: 'AG_05', adId: 'AD_005',
     vendorSource: 'Facebook Ads', dataVariant: 'B', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: 'short',
     additionalServices: 'Vision', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '33401',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 1, sfRemarketingResolved: '', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 1, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C006', firstName: 'Cameron', lastName: 'Grant', phone: '555-0106', email: 'c.grant@example.com',
     created: '2026-01-15', lastActivity: '2026-02-01', state: 'NC', householdSize: 1,
     existingPlanCarrier: 'UnitedHealth', existingPlanPremium: 390,
@@ -139,9 +204,9 @@ export const contacts: Contact[] = [
     fbclid: '', clickId: 'gc006', gclickid: 'gclid_006', campaignId: 'C_NC_01', adGroupId: 'AG_06', adId: 'AD_006',
     vendorSource: 'Google Ads', dataVariant: 'A', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: '',
     additionalServices: '', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '27601',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C007', firstName: 'Skyler', lastName: 'Hayes', phone: '555-0107', email: 's.hayes@example.com',
     created: '2026-01-18', lastActivity: '2026-02-04', state: 'TX', householdSize: 3,
     existingPlanCarrier: '', existingPlanPremium: null,
@@ -161,9 +226,9 @@ export const contacts: Contact[] = [
     fbclid: 'fb_007', clickId: '', gclickid: '', campaignId: 'C_TX_01', adGroupId: 'AG_07', adId: 'AD_007',
     vendorSource: 'Facebook Ads', dataVariant: 'A', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: '',
     additionalServices: '', companyName: '', opportunities: '', tldStatus: 'Pending', postalCode: '75201',
-    sfFormReceived: 'No', documentCollectionResolved: 'No', outreachSentCount: 3, sfRemarketingResolved: '', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'No', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'No', documentCollectionResolved: 'No', outreachSentCount: 3, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'No', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C008', firstName: 'Quinn', lastName: 'Jackson', phone: '555-0108', email: 'q.jackson@example.com',
     created: '2026-01-20', lastActivity: '2026-02-06', state: 'FL', householdSize: 2,
     existingPlanCarrier: 'Humana', existingPlanPremium: 340,
@@ -183,9 +248,9 @@ export const contacts: Contact[] = [
     fbclid: '', clickId: '', gclickid: '', campaignId: '', adGroupId: '', adId: '',
     vendorSource: 'Direct', dataVariant: '', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: '',
     additionalServices: 'Dental', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '33602',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: 'Yes', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: 'Yes', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C009', firstName: 'Dana', lastName: 'Kim', phone: '555-0109', email: 'd.kim@example.com',
     created: '2026-02-02', lastActivity: '2026-02-14', state: 'GA', householdSize: 4,
     existingPlanCarrier: 'Aetna', existingPlanPremium: 760,
@@ -205,9 +270,9 @@ export const contacts: Contact[] = [
     fbclid: '', clickId: 'gc009', gclickid: 'gclid_009', campaignId: 'C_GA_01', adGroupId: 'AG_09', adId: 'AD_009',
     vendorSource: 'Google Ads', dataVariant: 'A', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: 'short',
     additionalServices: 'Vision,Dental', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '30309',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C010', firstName: 'Parker', lastName: 'Lewis', phone: '555-0110', email: 'p.lewis@example.com',
     created: '2026-02-05', lastActivity: '2026-02-18', state: 'FL', householdSize: 1,
     existingPlanCarrier: '', existingPlanPremium: null,
@@ -227,9 +292,9 @@ export const contacts: Contact[] = [
     fbclid: '', clickId: '', gclickid: '', campaignId: 'C_FL_04', adGroupId: '', adId: '',
     vendorSource: 'Partner', dataVariant: '', affsub: 'PART_FL', affsub1: '', affsub2: '', affsub3: '', subId: 'SUB_010', utmGhl: '', shortFormAttribution: '',
     additionalServices: '', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '33010',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C011', firstName: 'Reese', lastName: 'Martin', phone: '555-0111', email: 'r.martin@example.com',
     created: '2026-02-08', lastActivity: '2026-02-20', state: 'TX', householdSize: 2,
     existingPlanCarrier: 'Cigna', existingPlanPremium: 480,
@@ -249,9 +314,9 @@ export const contacts: Contact[] = [
     fbclid: '', clickId: 'gc011', gclickid: 'gclid_011', campaignId: 'C_TX_02', adGroupId: 'AG_11', adId: 'AD_011',
     vendorSource: 'Google Ads', dataVariant: 'B', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: 'short',
     additionalServices: 'Dental', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '77001',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C012', firstName: 'Alex', lastName: 'Nguyen', phone: '555-0112', email: 'a.nguyen@example.com',
     created: '2026-02-11', lastActivity: '2026-02-22', state: 'FL', householdSize: 6,
     existingPlanCarrier: 'Molina', existingPlanPremium: 58,
@@ -271,9 +336,9 @@ export const contacts: Contact[] = [
     fbclid: '', clickId: '', gclickid: '', campaignId: '', adGroupId: '', adId: '',
     vendorSource: 'Direct', dataVariant: '', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: '',
     additionalServices: 'Vision,Dental', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '34201',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: 'Yes', oePremiumIncrease25kResolved: 'Yes', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: 'Yes', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: 'Yes', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: 'Yes', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C013', firstName: 'Blake', lastName: 'Ortiz', phone: '555-0113', email: 'b.ortiz@example.com',
     created: '2026-02-14', lastActivity: '2026-02-25', state: 'SC', householdSize: 3,
     existingPlanCarrier: '', existingPlanPremium: null,
@@ -293,9 +358,9 @@ export const contacts: Contact[] = [
     fbclid: 'fb_013', clickId: '', gclickid: '', campaignId: 'C_SC_01', adGroupId: 'AG_13', adId: 'AD_013',
     vendorSource: 'Facebook Ads', dataVariant: 'A', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: 'short',
     additionalServices: '', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '29201',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C014', firstName: 'Drew', lastName: 'Perez', phone: '555-0114', email: 'd.perez@example.com',
     created: '2026-02-17', lastActivity: '2026-03-01', state: 'TX', householdSize: 1,
     existingPlanCarrier: 'BlueCross', existingPlanPremium: 290,
@@ -315,9 +380,9 @@ export const contacts: Contact[] = [
     fbclid: '', clickId: 'gc014', gclickid: 'gclid_014', campaignId: 'C_TX_01', adGroupId: 'AG_14', adId: 'AD_014',
     vendorSource: 'Google Ads', dataVariant: 'B', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: '',
     additionalServices: '', companyName: '', opportunities: '', tldStatus: 'Inactive', postalCode: '78701',
-    sfFormReceived: 'No', documentCollectionResolved: 'No', outreachSentCount: 4, sfRemarketingResolved: '', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'No', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'No', documentCollectionResolved: 'No', outreachSentCount: 4, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'No', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C015', firstName: 'Casey', lastName: 'Rivera', phone: '555-0115', email: 'c.rivera@example.com',
     created: '2026-02-20', lastActivity: '2026-03-04', state: 'FL', householdSize: 2,
     existingPlanCarrier: 'Aetna', existingPlanPremium: 510,
@@ -337,9 +402,9 @@ export const contacts: Contact[] = [
     fbclid: '', clickId: 'gc015', gclickid: 'gclid_015', campaignId: 'C_FL_02', adGroupId: 'AG_15', adId: 'AD_015',
     vendorSource: 'Google Ads', dataVariant: 'A', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: 'short',
     additionalServices: '', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '33901',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C016', firstName: 'Finley', lastName: 'Scott', phone: '555-0116', email: 'f.scott@example.com',
     created: '2026-02-24', lastActivity: '2026-03-08', state: 'NC', householdSize: 3,
     existingPlanCarrier: '', existingPlanPremium: null,
@@ -359,9 +424,9 @@ export const contacts: Contact[] = [
     fbclid: 'fb_016', clickId: '', gclickid: '', campaignId: 'C_NC_02', adGroupId: 'AG_16', adId: 'AD_016',
     vendorSource: 'Facebook Ads', dataVariant: 'A', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: '',
     additionalServices: '', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '28201',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 1, sfRemarketingResolved: '', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 1, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C017', firstName: 'Harley', lastName: 'Thomas', phone: '555-0117', email: 'h.thomas@example.com',
     created: '2026-03-01', lastActivity: '2026-03-12', state: 'GA', householdSize: 2,
     existingPlanCarrier: 'Humana', existingPlanPremium: 620,
@@ -381,9 +446,9 @@ export const contacts: Contact[] = [
     fbclid: '', clickId: '', gclickid: '', campaignId: '', adGroupId: '', adId: '',
     vendorSource: 'Direct', dataVariant: '', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: '',
     additionalServices: 'Vision,Dental', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '30097',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: 'Yes', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C018', firstName: 'Jessie', lastName: 'Walker', phone: '555-0118', email: 'j.walker@example.com',
     created: '2026-03-04', lastActivity: '2026-03-18', state: 'FL', householdSize: 1,
     existingPlanCarrier: '', existingPlanPremium: null,
@@ -403,9 +468,9 @@ export const contacts: Contact[] = [
     fbclid: '', clickId: '', gclickid: '', campaignId: 'C_FL_04', adGroupId: '', adId: '',
     vendorSource: 'Partner', dataVariant: '', affsub: 'PART_FL', affsub1: '', affsub2: '', affsub3: '', subId: 'SUB_018', utmGhl: '', shortFormAttribution: '',
     additionalServices: '', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '33601',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C019', firstName: 'Kendall', lastName: 'Young', phone: '555-0119', email: 'k.young@example.com',
     created: '2026-03-07', lastActivity: '2026-03-20', state: 'NC', householdSize: 4,
     existingPlanCarrier: 'BlueCross', existingPlanPremium: 890,
@@ -425,9 +490,9 @@ export const contacts: Contact[] = [
     fbclid: '', clickId: 'gc019', gclickid: 'gclid_019', campaignId: 'C_NC_01', adGroupId: 'AG_19', adId: 'AD_019',
     vendorSource: 'Google Ads', dataVariant: 'A', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: 'short',
     additionalServices: 'Dental', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '27701',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: 'Yes', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: 'Yes', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
-  },
-  {
+    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 0, sfRemarketingResolved: 'Yes', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: 'Yes', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+  }),
+  c({
     contactId: 'C020', firstName: 'Logan', lastName: 'Zhang', phone: '555-0120', email: 'l.zhang@example.com',
     created: '2026-03-10', lastActivity: '2026-03-24', state: 'TX', householdSize: 2,
     existingPlanCarrier: '', existingPlanPremium: null,
@@ -447,6 +512,6 @@ export const contacts: Contact[] = [
     fbclid: 'fb_020', clickId: '', gclickid: '', campaignId: 'C_TX_03', adGroupId: 'AG_20', adId: 'AD_020',
     vendorSource: 'Facebook Ads', dataVariant: 'B', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: '',
     additionalServices: '', companyName: '', opportunities: '', tldStatus: 'Pending', postalCode: '77002',
-    sfFormReceived: 'No', documentCollectionResolved: 'No', outreachSentCount: 3, sfRemarketingResolved: '', oePremiumIncrease25kResolved: '', sfRemarketingInboundCall: 'Yes', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'No', opportunityDistribution: '',
-  },
+    sfFormReceived: 'No', documentCollectionResolved: 'No', outreachSentCount: 3, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: 'Yes', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'No', opportunityDistribution: '',
+  }),
 ]

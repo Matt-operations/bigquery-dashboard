@@ -1,10 +1,6 @@
 import {
   LayoutDashboard,
-  TrendingUp,
-  Users,
-  BarChart3,
-  FileText,
-  Settings,
+  RefreshCw,
   Bell,
   Zap,
   LogOut,
@@ -13,20 +9,18 @@ import {
 interface NavItem {
   icon: React.ReactNode
   label: string
-  active?: boolean
-  badge?: number
 }
 
 const navItems: NavItem[] = [
-  { icon: <LayoutDashboard size={18} />, label: 'Dashboard', active: true },
-  { icon: <TrendingUp size={18} />,      label: 'Sales',     badge: 3      },
-  { icon: <Users size={18} />,           label: 'Customers'                },
-  { icon: <BarChart3 size={18} />,       label: 'Analytics'                },
-  { icon: <FileText size={18} />,        label: 'Reports'                  },
-  { icon: <Settings size={18} />,        label: 'Settings'                 },
+  { icon: <LayoutDashboard size={18} />, label: 'Dashboard' },
+  { icon: <RefreshCw size={18} />,       label: 'Retention' },
 ]
 
-export default function Sidebar({ onLogout }: { onLogout?: () => void }) {
+export default function Sidebar({ activePage, onNavigate, onLogout }: {
+  activePage?: string
+  onNavigate?: (page: string) => void
+  onLogout?: () => void
+}) {
   return (
     <aside className="fixed left-0 top-0 h-screen w-60 flex flex-col bg-bg-secondary border-r border-border-subtle z-20">
       {/* Logo */}
@@ -44,26 +38,25 @@ export default function Sidebar({ onLogout }: { onLogout?: () => void }) {
         <p className="px-3 pt-2 pb-1 text-[10px] font-semibold uppercase tracking-widest text-text-muted">
           Main
         </p>
-        {navItems.map(item => (
-          <button
-            key={item.label}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all group ${
-              item.active
-                ? 'bg-accent-purple-dim text-accent-purple-light'
-                : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'
-            }`}
-          >
-            <span className={item.active ? 'text-accent-purple' : 'text-text-muted group-hover:text-text-secondary'}>
-              {item.icon}
-            </span>
-            <span className="flex-1 text-left">{item.label}</span>
-            {item.badge && (
-              <span className="text-[10px] font-bold bg-accent-purple text-white rounded-full px-1.5 py-0.5 leading-none">
-                {item.badge}
+        {navItems.map(item => {
+          const isActive = activePage === item.label
+          return (
+            <button
+              key={item.label}
+              onClick={() => onNavigate?.(item.label)}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all group ${
+                isActive
+                  ? 'bg-accent-purple-dim text-accent-purple-light'
+                  : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'
+              }`}
+            >
+              <span className={isActive ? 'text-accent-purple' : 'text-text-muted group-hover:text-text-secondary'}>
+                {item.icon}
               </span>
-            )}
-          </button>
-        ))}
+              <span className="flex-1 text-left">{item.label}</span>
+            </button>
+          )
+        })}
       </nav>
 
       {/* Bottom */}

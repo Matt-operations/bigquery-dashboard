@@ -138,8 +138,7 @@ function buildStateBreakdown(contacts: Contact[]): StateBreakdown[] {
 
 // ─── Public API ───────────────────────────────────────────────────────────────
 
-export async function getDashboardData(dateRange: DateRange): Promise<DashboardData> {
-  const contacts = await fetchContacts(dateRange)
+export function buildDashboardFromContacts(contacts: Contact[]): DashboardData {
   return {
     contacts,
     kpis: buildKPIs(contacts),
@@ -149,4 +148,9 @@ export async function getDashboardData(dateRange: DateRange): Promise<DashboardD
     agentPerformance: buildAgentPerformance(contacts),
     stateBreakdown: buildStateBreakdown(contacts),
   }
+}
+
+export async function getDashboardData(dateRange: DateRange): Promise<DashboardData> {
+  const contacts = await fetchContacts(dateRange)
+  return buildDashboardFromContacts(contacts)
 }

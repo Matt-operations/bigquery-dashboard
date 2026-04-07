@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import type { DashboardData, DateRange } from '../types'
-import { getDashboardData } from '../services/dataService'
+import { useMemo } from 'react'
+import type { Contact, DateRange } from '../types'
+import { buildDashboardFromContacts } from '../services/dataService'
 import Header from '../components/Header'
 import KPICard from '../components/KPICard'
 import RevenueChart from '../components/RevenueChart'
@@ -22,33 +22,31 @@ function SkeletonCard({ className = '' }: { className?: string }) {
   )
 }
 
-export default function Dashboard() {
-  const [data, setData] = useState<DashboardData | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [dateRange, setDateRange] = useState<DateRange>('12m')
+interface Props {
+  contacts: Contact[]
+  dateRange: DateRange
+  onDateRangeChange: (range: DateRange) => void
+}
 
-  useEffect(() => {
-    setLoading(true)
-    getDashboardData(dateRange)
-      .then(setData)
-      .finally(() => setLoading(false))
-  }, [dateRange])
+export default function Dashboard({ contacts, dateRange, onDateRangeChange }: Props) {
+  const loading = contacts.length === 0
+  const data = useMemo(() => buildDashboardFromContacts(contacts), [contacts])
 
   return (
     <div className="flex flex-col h-screen overflow-hidden">
-      <Header dateRange={dateRange} onDateRangeChange={setDateRange} />
+      <Header dateRange={dateRange} onDateRangeChange={onDateRangeChange} />
 
       <main className="flex-1 overflow-y-auto px-8 py-6">
         {/* KPI Row */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           {loading
             ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
-            : data?.kpis.map((metric, i) => (
+            : data.kpis.map((metric, i) => (
                 <KPICard key={metric.label} metric={metric} accentColor={kpiColors[i]} />
               ))}
         </div>
 
-        {/* Charts Row 1: Submissions (2/3) + Sources (1/3) */}
+        {/* Charts Row 1 */}
         <div className="grid grid-cols-3 gap-4 mb-4">
           {loading ? (
             <>
@@ -57,13 +55,13 @@ export default function Dashboard() {
             </>
           ) : (
             <>
-              <RevenueChart data={data!.monthlyTrend} />
-              <SalesByChannelChart data={data!.leadsBySource} />
+              <RevenueChart data={data.monthlyTrend} />
+              <SalesByChannelChart data={data.leadsBySource} />
             </>
           )}
         </div>
 
-        {/* Charts Row 2: Metal Levels + State Breakdown + Recent Leads */}
+        {/* Charts Row 2 */}
         <div className="grid grid-cols-3 gap-4 mb-4">
           {loading ? (
             <>
@@ -73,19 +71,19 @@ export default function Dashboard() {
             </>
           ) : (
             <>
-              <CustomerSegmentsChart data={data!.metalLevels} />
-              <FunnelChart data={data!.stateBreakdown} />
-              <RecentDealsTable data={data!.contacts.slice(0, 5)} />
+              <CustomerSegmentsChart data={data.metalLevels} />
+              <FunnelChart data={data.stateBreakdown} />
+              <RecentDealsTable data={data.contacts.slice(0, 5)} />
             </>
           )}
         </div>
 
-        {/* Full width: Agent Performance */}
+        {/* Agent Performance */}
         <div className="grid grid-cols-3 gap-4 pb-4">
           {loading ? (
             <SkeletonCard className="col-span-3 h-64" />
           ) : (
-            <TopProductsTable data={data!.agentPerformance} />
+            <TopProductsTable data={data.agentPerformance} />
           )}
         </div>
       </main>
