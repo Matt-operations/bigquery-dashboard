@@ -7,6 +7,7 @@ import {
   Settings,
   Bell,
   Zap,
+  LogOut,
 } from 'lucide-react'
 
 interface NavItem {
@@ -25,7 +26,7 @@ const navItems: NavItem[] = [
   { icon: <Settings size={18} />,        label: 'Settings'                 },
 ]
 
-export default function Sidebar() {
+export default function Sidebar({ onLogout }: { onLogout?: () => void }) {
   return (
     <aside className="fixed left-0 top-0 h-screen w-60 flex flex-col bg-bg-secondary border-r border-border-subtle z-20">
       {/* Logo */}
@@ -77,6 +78,15 @@ export default function Sidebar() {
           </div>
           <Bell size={15} className="text-text-muted flex-shrink-0" />
         </div>
+        {onLogout && (
+          <button
+            onClick={onLogout}
+            className="w-full flex items-center gap-3 px-3 py-2 mt-1 rounded-xl text-sm text-text-muted hover:text-text-primary hover:bg-bg-hover transition-colors"
+          >
+            <LogOut size={15} />
+            <span>Sign out</span>
+          </button>
+        )}
       </div>
     </aside>
   )
