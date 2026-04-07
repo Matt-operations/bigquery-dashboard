@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts'
-import type { Contact, RetentionIssue, RetentionContact } from '../types'
+import type { Contact, RetentionIssue } from '../types'
 
 interface Props {
   contacts: Contact[]
@@ -81,21 +81,8 @@ const ISSUE_CONFIGS = [
   },
 ]
 
-const STATUS_COLORS: Record<string, string> = {
-  Active: '#22c55e',
-  Enrolled: '#4DA3FF',
-  Pending: '#eab308',
-  Terminated: '#ef4444',
-  Lapsed: '#f97316',
-  Cancelled: '#ef4444',
-  'Not Enrolled': '#94a3b8',
-  'Grace Period': '#f97316',
-}
 
 export default function Retention({ contacts }: Props) {
-  const [activeFilter, setActiveFilter] = useState<string>('all')
-  const [search, setSearch] = useState('')
-
   const issues = useMemo<RetentionIssue[]>(() => {
     return ISSUE_CONFIGS.map(cfg => {
       const active = contacts.filter(cfg.active)
@@ -112,37 +99,10 @@ export default function Retention({ contacts }: Props) {
     })
   }, [contacts])
 
-  const retentionContacts = useMemo<RetentionContact[]>(() => {
-    return contacts
-      .map(c => {
-        const issueLabels = ISSUE_CONFIGS
-          .filter(cfg => cfg.active(c))
-          .map(cfg => cfg.label)
-        return {
-          contactId: c.contactId,
-          firstName: c.firstName,
-          lastName: c.lastName,
-          status: c.status,
-          retentionAgent: c.retentionAgent || c.originalRetentionAgent || '—',
-          issues: issueLabels,
-          outreachSentCount: c.outreachSentCount,
-          resubmissionCount: c.resubmissionCount,
-        }
-      })
-      .filter(c => c.issues.length > 0)
-  }, [contacts])
-
-  const filtered = useMemo(() => {
-    return retentionContacts.filter(c => {
-      const matchesFilter = activeFilter === 'all' || c.issues.includes(activeFilter)
-      const matchesSearch = search === '' ||
-        `${c.firstName} ${c.lastName}`.toLowerCase().includes(search.toLowerCase()) ||
-        c.retentionAgent.toLowerCase().includes(search.toLowerCase())
-      return matchesFilter && matchesSearch
-    })
-  }, [retentionContacts, activeFilter, search])
-
-  const totalWithIssues = retentionContacts.length
+  const totalWithIssues = useMemo(
+    () => contacts.filter(c => ISSUE_CONFIGS.some(cfg => cfg.active(c))).length,
+    [contacts]
+  )
   const totalResolved = issues.reduce((s, i) => s + i.resolved, 0)
   const totalIssues = issues.reduce((s, i) => s + i.total, 0)
 
@@ -220,80 +180,6 @@ export default function Retention({ contacts }: Props) {
         </div>
       </div>
 
-      {/* Contacts Table */}
-      <div className="bg-bg-secondary border border-border-subtle rounded-2xl p-5">
-        <div className="flex items-center justify-between mb-4 gap-4">
-          <h2 className="text-text-primary font-semibold">Contacts with Open Issues</h2>
-          <div className="flex items-center gap-3">
-            <input
-              type="text"
-              placeholder="Search name or agent..."
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="bg-bg-hover border border-border-subtle rounded-lg px-3 py-1.5 text-sm text-text-primary placeholder-text-muted focus:outline-none focus:border-accent-purple w-52"
-            />
-            <select
-              value={activeFilter}
-              onChange={e => setActiveFilter(e.target.value)}
-              className="bg-bg-hover border border-border-subtle rounded-lg px-3 py-1.5 text-sm text-text-primary focus:outline-none focus:border-accent-purple"
-            >
-              <option value="all">All Issues</option>
-              {ISSUE_CONFIGS.map(cfg => (
-                <option key={cfg.key} value={cfg.label}>{cfg.label}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border-subtle">
-                {['Name', 'Status', 'Retention Agent', 'Issues', 'Outreach', 'Resubmissions'].map(h => (
-                  <th key={h} className="text-left text-text-muted font-medium pb-3 pr-4">{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.slice(0, 100).map(c => (
-                <tr key={c.contactId} className="border-b border-border-subtle/50 hover:bg-bg-hover transition-colors">
-                  <td className="py-3 pr-4 text-text-primary font-medium">{c.firstName} {c.lastName}</td>
-                  <td className="py-3 pr-4">
-                    <span
-                      className="px-2 py-0.5 rounded-full text-xs font-medium"
-                      style={{
-                        color: STATUS_COLORS[c.status] ?? '#94a3b8',
-                        background: (STATUS_COLORS[c.status] ?? '#94a3b8') + '22',
-                      }}
-                    >
-                      {c.status || '—'}
-                    </span>
-                  </td>
-                  <td className="py-3 pr-4 text-text-secondary">{c.retentionAgent}</td>
-                  <td className="py-3 pr-4">
-                    <div className="flex flex-wrap gap-1">
-                      {c.issues.map(issue => (
-                        <span key={issue} className="px-2 py-0.5 rounded-full text-xs bg-accent-purple/20 text-accent-purple-light">
-                          {issue}
-                        </span>
-                      ))}
-                    </div>
-                  </td>
-                  <td className="py-3 pr-4 text-text-secondary">{c.outreachSentCount}</td>
-                  <td className="py-3 pr-4 text-text-secondary">{c.resubmissionCount}</td>
-                </tr>
-              ))}
-              {filtered.length === 0 && (
-                <tr>
-                  <td colSpan={6} className="py-8 text-center text-text-muted">No contacts found</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-          {filtered.length > 100 && (
-            <p className="text-text-muted text-xs mt-3">Showing 100 of {filtered.length} contacts</p>
-          )}
-        </div>
-      </div>
     </div>
   )
 }
