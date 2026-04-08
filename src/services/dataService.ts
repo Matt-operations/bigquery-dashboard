@@ -39,11 +39,11 @@ async function fetchContacts(dateRange: DateRange): Promise<Contact[]> {
 // ─── Aggregations ────────────────────────────────────────────────────────────
 
 function buildKPIs(contacts: Contact[]): KPIMetric[] {
-  const shortForms = contacts.filter(c => !c.customerApplicationId && !c.selectedPlanName).length
-  const fullForms = contacts.filter(c => !!(c.customerApplicationId || c.selectedPlanName)).length
+  const shortForms = contacts.filter(c => !c.selectedPlanName).length
+  const fullForms = contacts.filter(c => !!c.selectedPlanName).length
   const converted = contacts.filter(c => c.converted === 'Yes').length
   const sfConversions = contacts.filter(c =>
-    !!(c.customerApplicationId || c.selectedPlanName) && !!c.shortFormAttribution
+    !!c.selectedPlanName && !!c.shortFormAttribution
   ).length
   const convRate = fullForms > 0 ? (converted / fullForms) * 100 : 0
 
@@ -65,7 +65,7 @@ function buildMonthlyTrend(contacts: Contact[]): MonthlyTrend[] {
     if (isNaN(d.getTime())) return
     const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
     if (!byMonth[key]) byMonth[key] = { month: MONTHS[d.getMonth()], shortForms: 0, fullForms: 0, conversions: 0, sfConversions: 0, premiumVolume: 0 }
-    const isFullForm = !!(c.customerApplicationId || c.selectedPlanName)
+    const isFullForm = !!c.selectedPlanName
     if (isFullForm) {
       byMonth[key].fullForms++
       if (c.shortFormAttribution) byMonth[key].sfConversions++
