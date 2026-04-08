@@ -26,7 +26,6 @@ const retentionDefaults: Omit<Contact,
   'outreachSentCount'|'sfRemarketingResolved'|'oePremiumIncrease25kResolved'|'sfRemarketingInboundCall'|
   'sfRemarketingTriggerLinkClicked'|'documentCollectionFormReceived'|'opportunityDistribution'
 > = {
-  tags: '',
   documentCollectionResponseReceived: '', documentCollectionTriggerLinkClicked: '', documentCollectionInboundCall: '',
   documentCollectionOutreachSentCount: 0, documentCollectionOutreachSentDate: '', documentCollectionSplit: '',
   sfRemarketingFormReceived: '', sfRemarketingResponseReceived: '',
@@ -52,7 +51,6 @@ const retentionDefaults: Omit<Contact,
 }
 
 function c(contact: Omit<Contact,
-  'tags'|
   'documentCollectionResponseReceived'|'documentCollectionTriggerLinkClicked'|'documentCollectionInboundCall'|
   'documentCollectionOutreachSentCount'|'documentCollectionOutreachSentDate'|'documentCollectionSplit'|
   'sfRemarketingFormReceived'|'sfRemarketingResponseReceived'|'sfRemarketingOutreachSentCount'|

@@ -25,8 +25,9 @@ export default function App() {
   function handleLogin(credential: string) {
     const payload = JSON.parse(atob(credential.split('.')[1]))
     console.log('Login email:', payload.email)
-    if (!payload.email?.endsWith('@boosthealthinsurance.com')) {
-      alert(`Access denied. Your email (${payload.email}) is not a @boosthealthinsurance.com account.`)
+    const allowed = ['@boosthealthinsurance.com', '@boosthealth.com']
+    if (!allowed.some(domain => payload.email?.endsWith(domain))) {
+      alert(`Access denied. Your email (${payload.email}) is not authorized.`)
       return
     }
     sessionStorage.setItem('google_token', credential)

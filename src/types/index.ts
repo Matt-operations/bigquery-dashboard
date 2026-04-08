@@ -20,7 +20,6 @@ export interface Contact {
   suggestedPlanPremium: number | null
   suggestedPlanGrossPremium: number | null
   digiBACAConvertedIdentifier: string
-  tags: string
   salesTagsDropDown: string
   actionNeededItem: string
   primaryDMINonCoverage: string
