@@ -39,23 +39,20 @@ async function fetchContacts(dateRange: DateRange): Promise<Contact[]> {
 // ─── Aggregations ────────────────────────────────────────────────────────────
 
 function buildKPIs(contacts: Contact[]): KPIMetric[] {
-  const total = contacts.length
+  const shortForms = contacts.filter(c => !c.customerApplicationId && !c.selectedPlanName).length
+  const fullForms = contacts.filter(c => !!(c.customerApplicationId || c.selectedPlanName)).length
   const converted = contacts.filter(c => c.converted === 'Yes').length
-  const convRate = total > 0 ? (converted / total) * 100 : 0
-
-  const savings = contacts
-    .filter(c => c.existingPlanPremium && c.suggestedPlanPremium !== null)
-    .map(c => (c.existingPlanPremium ?? 0) - (c.suggestedPlanPremium ?? 0))
-    .filter(s => s > 0)
-  const avgSavings = savings.length > 0
-    ? savings.reduce((a, b) => a + b, 0) / savings.length
-    : 0
+  const sfConversions = contacts.filter(c =>
+    !!(c.customerApplicationId || c.selectedPlanName) && !!c.shortFormAttribution
+  ).length
+  const convRate = fullForms > 0 ? (converted / fullForms) * 100 : 0
 
   return [
-    { label: 'Total Leads',        value: total.toLocaleString(),       change: 12.4,  changeLabel: 'vs last period' },
-    { label: 'Converted',          value: converted.toLocaleString(),   change: 8.7,   changeLabel: 'vs last period' },
-    { label: 'Conversion Rate',    value: `${convRate.toFixed(1)}%`,    change: -1.2,  changeLabel: 'vs last period', suffix: '%' },
-    { label: 'Avg Monthly Savings',value: `$${avgSavings.toFixed(0)}`,  change: 14.3,  changeLabel: 'per converted customer', prefix: '$' },
+    { label: 'Short Forms',      value: shortForms.toLocaleString(),      change: 0, changeLabel: 'vs last period' },
+    { label: 'Full Forms',       value: fullForms.toLocaleString(),        change: 0, changeLabel: 'vs last period' },
+    { label: 'SF → Full Form',   value: sfConversions.toLocaleString(),    change: 0, changeLabel: 'short forms converted' },
+    { label: 'Conversions',      value: converted.toLocaleString(),        change: 0, changeLabel: 'vs last period' },
+    { label: 'Conversion Rate',  value: `${convRate.toFixed(1)}%`,         change: 0, changeLabel: 'of full forms', suffix: '%' },
   ]
 }
 
@@ -67,10 +64,16 @@ function buildMonthlyTrend(contacts: Contact[]): MonthlyTrend[] {
     const d = new Date(date)
     if (isNaN(d.getTime())) return
     const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
-    if (!byMonth[key]) byMonth[key] = { month: MONTHS[d.getMonth()], submissions: 0, conversions: 0, premiumVolume: 0 }
-    byMonth[key].submissions++
+    if (!byMonth[key]) byMonth[key] = { month: MONTHS[d.getMonth()], shortForms: 0, fullForms: 0, conversions: 0, sfConversions: 0, premiumVolume: 0 }
+    const isFullForm = !!(c.customerApplicationId || c.selectedPlanName)
+    if (isFullForm) {
+      byMonth[key].fullForms++
+      if (c.shortFormAttribution) byMonth[key].sfConversions++
+    } else {
+      byMonth[key].shortForms++
+    }
     if (c.converted === 'Yes') byMonth[key].conversions++
-    byMonth[key].premiumVolume += c.suggestedPlanPremium ?? 0
+    byMonth[key].premiumVolume += c.selectedPlanPremium ?? 0
   })
   return Object.entries(byMonth).sort(([a], [b]) => a.localeCompare(b)).map(([, v]) => v)
 }

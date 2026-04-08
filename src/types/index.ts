@@ -191,8 +191,10 @@ export interface KPIMetric {
 
 export interface MonthlyTrend {
   month: string
-  submissions: number
+  shortForms: number
+  fullForms: number
   conversions: number
+  sfConversions: number
   premiumVolume: number
 }
 
