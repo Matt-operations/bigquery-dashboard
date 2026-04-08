@@ -100,6 +100,7 @@ function buildMetalLevels(contacts: Contact[]): PlanMetalLevel[] {
   const colors: Record<string, string> = { Bronze: '#FB923C', Silver: '#94A3B8', Gold: '#EAB308', Platinum: '#7C5CFC' }
   const counts: Record<string, number> = {}
   contacts.forEach(c => {
+    if (c.converted !== 'Yes') return
     if (!c.selectedPlanMetalLevel) return
     counts[c.selectedPlanMetalLevel] = (counts[c.selectedPlanMetalLevel] ?? 0) + 1
   })
