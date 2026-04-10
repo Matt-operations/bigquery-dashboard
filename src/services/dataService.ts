@@ -27,10 +27,12 @@ const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov
 
 async function fetchContacts(dateRange: DateRange): Promise<Contact[]> {
   if (!API_BASE) {
-    // No API URL set — use synthesized data
     return syntheticContacts
   }
-  const res = await fetch(`${API_BASE}/contacts?range=${dateRange}`)
+  const token = sessionStorage.getItem('google_token') || ''
+  const res = await fetch(`${API_BASE}/contacts?range=${dateRange}`, {
+    headers: { 'Authorization': `Bearer ${token}` }
+  })
   if (!res.ok) throw new Error(`API error ${res.status}: ${await res.text()}`)
   const { contacts } = await res.json()
   return contacts as Contact[]
