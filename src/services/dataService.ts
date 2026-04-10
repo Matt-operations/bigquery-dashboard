@@ -44,10 +44,9 @@ function buildKPIs(contacts: Contact[]): KPIMetric[] {
   const shortForms = contacts.filter(c => !c.selectedPlanName).length
   const fullForms = contacts.filter(c => !!c.selectedPlanName).length
   const sfToFull = contacts.filter(c => {
-    if (!c.selectedPlanName || !c.submissionDate || !c.created) return false
-    const received = new Date(c.created).toDateString()
-    const submitted = new Date(c.submissionDate).toDateString()
-    return received !== submitted
+    if (!c.selectedPlanName || !c.signatureTimestamp || !c.created) return false
+    const diffMs = new Date(c.signatureTimestamp!).getTime() - new Date(c.created).getTime()
+    return diffMs > 60 * 60 * 1000  // signed more than 1 hour after being created
   }).length
   const converted = contacts.filter(c => c.converted === 'Yes').length
   const convRate = fullForms > 0 ? (converted / fullForms) * 100 : 0

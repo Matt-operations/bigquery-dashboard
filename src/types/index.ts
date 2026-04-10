@@ -88,6 +88,7 @@ export interface Contact {
   tldStatus: string
   postalCode: string
   sfFormReceived: string
+  signatureTimestamp?: string
   outreachSentCount: number
   opportunityDistribution: string
 

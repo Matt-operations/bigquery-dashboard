@@ -94,7 +94,7 @@ export const contacts: Contact[] = [
     fbclid: '', clickId: 'gc001', gclickid: 'gclid_001', campaignId: 'C_FL_01', adGroupId: 'AG_01', adId: 'AD_001',
     vendorSource: 'Google Ads', dataVariant: 'A', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: 'short',
     additionalServices: '', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '33101',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 1, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+    sfFormReceived: 'Yes', signatureTimestamp: '', documentCollectionResolved: 'Yes', outreachSentCount: 1, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
   }),
   c({
     contactId: 'C002', firstName: 'Taylor', lastName: 'Brooks', phone: '555-0102', email: 't.brooks@example.com',
@@ -182,7 +182,7 @@ export const contacts: Contact[] = [
     fbclid: 'fb_005', clickId: '', gclickid: '', campaignId: 'C_FL_03', adGroupId: 'AG_05', adId: 'AD_005',
     vendorSource: 'Facebook Ads', dataVariant: 'B', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: 'short',
     additionalServices: 'Vision', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '33401',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 1, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+    sfFormReceived: 'Yes', signatureTimestamp: '', documentCollectionResolved: 'Yes', outreachSentCount: 1, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
   }),
   c({
     contactId: 'C006', firstName: 'Cameron', lastName: 'Grant', phone: '555-0106', email: 'c.grant@example.com',
@@ -226,7 +226,7 @@ export const contacts: Contact[] = [
     fbclid: 'fb_007', clickId: '', gclickid: '', campaignId: 'C_TX_01', adGroupId: 'AG_07', adId: 'AD_007',
     vendorSource: 'Facebook Ads', dataVariant: 'A', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: '',
     additionalServices: '', companyName: '', opportunities: '', tldStatus: 'Pending', postalCode: '75201',
-    sfFormReceived: 'No', documentCollectionResolved: 'No', outreachSentCount: 3, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'No', opportunityDistribution: '',
+    sfFormReceived: 'No', signatureTimestamp: '', documentCollectionResolved: 'No', outreachSentCount: 3, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'No', opportunityDistribution: '',
   }),
   c({
     contactId: 'C008', firstName: 'Quinn', lastName: 'Jackson', phone: '555-0108', email: 'q.jackson@example.com',
@@ -380,7 +380,7 @@ export const contacts: Contact[] = [
     fbclid: '', clickId: 'gc014', gclickid: 'gclid_014', campaignId: 'C_TX_01', adGroupId: 'AG_14', adId: 'AD_014',
     vendorSource: 'Google Ads', dataVariant: 'B', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: '',
     additionalServices: '', companyName: '', opportunities: '', tldStatus: 'Inactive', postalCode: '78701',
-    sfFormReceived: 'No', documentCollectionResolved: 'No', outreachSentCount: 4, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'No', opportunityDistribution: '',
+    sfFormReceived: 'No', signatureTimestamp: '', documentCollectionResolved: 'No', outreachSentCount: 4, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'No', opportunityDistribution: '',
   }),
   c({
     contactId: 'C015', firstName: 'Casey', lastName: 'Rivera', phone: '555-0115', email: 'c.rivera@example.com',
@@ -424,7 +424,7 @@ export const contacts: Contact[] = [
     fbclid: 'fb_016', clickId: '', gclickid: '', campaignId: 'C_NC_02', adGroupId: 'AG_16', adId: 'AD_016',
     vendorSource: 'Facebook Ads', dataVariant: 'A', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: '',
     additionalServices: '', companyName: '', opportunities: '', tldStatus: 'Active', postalCode: '28201',
-    sfFormReceived: 'Yes', documentCollectionResolved: 'Yes', outreachSentCount: 1, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
+    sfFormReceived: 'Yes', signatureTimestamp: '', documentCollectionResolved: 'Yes', outreachSentCount: 1, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: '', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'Yes', opportunityDistribution: '',
   }),
   c({
     contactId: 'C017', firstName: 'Harley', lastName: 'Thomas', phone: '555-0117', email: 'h.thomas@example.com',
@@ -512,6 +512,6 @@ export const contacts: Contact[] = [
     fbclid: 'fb_020', clickId: '', gclickid: '', campaignId: 'C_TX_03', adGroupId: 'AG_20', adId: 'AD_020',
     vendorSource: 'Facebook Ads', dataVariant: 'B', affsub: '', affsub1: '', affsub2: '', affsub3: '', subId: '', utmGhl: '', shortFormAttribution: '',
     additionalServices: '', companyName: '', opportunities: '', tldStatus: 'Pending', postalCode: '77002',
-    sfFormReceived: 'No', documentCollectionResolved: 'No', outreachSentCount: 3, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: 'Yes', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'No', opportunityDistribution: '',
+    sfFormReceived: 'No', signatureTimestamp: '', documentCollectionResolved: 'No', outreachSentCount: 3, sfRemarketingResolved: '', oePremiumIncrease25kResolved: "", sfRemarketingInboundCall: 'Yes', sfRemarketingTriggerLinkClicked: '', documentCollectionFormReceived: 'No', opportunityDistribution: '',
   }),
 ]
