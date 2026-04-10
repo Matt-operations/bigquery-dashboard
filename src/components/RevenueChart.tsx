@@ -47,9 +47,6 @@ export default function RevenueChart({ data }: SubmissionTrendChartProps) {
           <span className="flex items-center gap-1.5">
             <span className="w-3 h-0.5 rounded bg-[#2DD4BF] inline-block" /> Conversions
           </span>
-          <span className="flex items-center gap-1.5">
-            <span className="w-3 h-0.5 rounded bg-[#FB923C] inline-block" /> SF → Full
-          </span>
         </div>
       </div>
 
@@ -68,10 +65,6 @@ export default function RevenueChart({ data }: SubmissionTrendChartProps) {
               <stop offset="5%"  stopColor="#2DD4BF" stopOpacity={0.20} />
               <stop offset="95%" stopColor="#2DD4BF" stopOpacity={0}    />
             </linearGradient>
-            <linearGradient id="colorSFConv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%"  stopColor="#FB923C" stopOpacity={0.20} />
-              <stop offset="95%" stopColor="#FB923C" stopOpacity={0}    />
-            </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" stroke="#1E2235" vertical={false} />
           <XAxis dataKey="month" tick={{ fill: '#8B8FA8', fontSize: 11 }} axisLine={false} tickLine={false} />
@@ -80,7 +73,6 @@ export default function RevenueChart({ data }: SubmissionTrendChartProps) {
           <Area type="monotone" dataKey="shortForms"    name="Short Forms" stroke="#4DA3FF" strokeWidth={2}   fill="url(#colorShort)"  dot={false} activeDot={{ r: 4, fill: '#4DA3FF', stroke: '#161929', strokeWidth: 2 }} />
           <Area type="monotone" dataKey="fullForms"     name="Full Forms"  stroke="#7C5CFC" strokeWidth={2.5} fill="url(#colorFull)"   dot={false} activeDot={{ r: 4, fill: '#7C5CFC', stroke: '#161929', strokeWidth: 2 }} />
           <Area type="monotone" dataKey="conversions"   name="Conversions" stroke="#2DD4BF" strokeWidth={2}   fill="url(#colorConv)"   dot={false} activeDot={{ r: 4, fill: '#2DD4BF', stroke: '#161929', strokeWidth: 2 }} />
-          <Area type="monotone" dataKey="sfConversions" name="SF → Full"   stroke="#FB923C" strokeWidth={2}   fill="url(#colorSFConv)" dot={false} activeDot={{ r: 4, fill: '#FB923C', stroke: '#161929', strokeWidth: 2 }} />
         </AreaChart>
       </ResponsiveContainer>
     </div>

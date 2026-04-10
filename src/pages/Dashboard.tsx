@@ -10,7 +10,7 @@ import TopProductsTable from '../components/TopProductsTable'
 import RecentDealsTable from '../components/RecentDealsTable'
 import FunnelChart from '../components/FunnelChart'
 
-const kpiColors = ['#4DA3FF', '#7C5CFC', '#FB923C', '#2DD4BF', '#EAB308']
+const kpiColors = ['#4DA3FF', '#7C5CFC', '#2DD4BF', '#FB923C']
 
 function SkeletonCard({ className = '' }: { className?: string }) {
   return (
@@ -38,9 +38,9 @@ export default function Dashboard({ contacts, dateRange, onDateRangeChange }: Pr
 
       <main className="flex-1 overflow-y-auto px-8 py-6">
         {/* KPI Row */}
-        <div className="grid grid-cols-5 gap-4 mb-6">
+        <div className="grid grid-cols-4 gap-4 mb-6">
           {loading
-            ? Array.from({ length: 5 }).map((_, i) => <SkeletonCard key={i} />)
+            ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
             : data.kpis.map((metric, i) => (
                 <KPICard key={metric.label} metric={metric} accentColor={kpiColors[i]} />
               ))}

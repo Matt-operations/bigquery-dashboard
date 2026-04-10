@@ -42,17 +42,13 @@ function buildKPIs(contacts: Contact[]): KPIMetric[] {
   const shortForms = contacts.filter(c => !c.selectedPlanName).length
   const fullForms = contacts.filter(c => !!c.selectedPlanName).length
   const converted = contacts.filter(c => c.converted === 'Yes').length
-  const sfConversions = contacts.filter(c =>
-    !!c.selectedPlanName && !!c.shortFormAttribution
-  ).length
   const convRate = fullForms > 0 ? (converted / fullForms) * 100 : 0
 
   return [
-    { label: 'Short Forms',      value: shortForms.toLocaleString(),      change: 0, changeLabel: 'vs last period' },
-    { label: 'Full Forms',       value: fullForms.toLocaleString(),        change: 0, changeLabel: 'vs last period' },
-    { label: 'SF → Full Form',   value: sfConversions.toLocaleString(),    change: 0, changeLabel: 'short forms converted' },
-    { label: 'Conversions',      value: converted.toLocaleString(),        change: 0, changeLabel: 'vs last period' },
-    { label: 'Conversion Rate',  value: `${convRate.toFixed(1)}%`,         change: 0, changeLabel: 'of full forms', suffix: '%' },
+    { label: 'Short Forms',      value: shortForms.toLocaleString(),  change: 0, changeLabel: 'vs last period' },
+    { label: 'Full Forms',       value: fullForms.toLocaleString(),   change: 0, changeLabel: 'vs last period' },
+    { label: 'Conversions',      value: converted.toLocaleString(),   change: 0, changeLabel: 'vs last period' },
+    { label: 'Conversion Rate',  value: `${convRate.toFixed(1)}%`,    change: 0, changeLabel: 'of full forms', suffix: '%' },
   ]
 }
 
@@ -66,12 +62,8 @@ function buildMonthlyTrend(contacts: Contact[]): MonthlyTrend[] {
     const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
     if (!byMonth[key]) byMonth[key] = { month: MONTHS[d.getMonth()], shortForms: 0, fullForms: 0, conversions: 0, sfConversions: 0, premiumVolume: 0 }
     const isFullForm = !!c.selectedPlanName
-    if (isFullForm) {
-      byMonth[key].fullForms++
-      if (c.shortFormAttribution) byMonth[key].sfConversions++
-    } else {
-      byMonth[key].shortForms++
-    }
+    if (isFullForm) byMonth[key].fullForms++
+    else byMonth[key].shortForms++
     if (c.converted === 'Yes') byMonth[key].conversions++
     byMonth[key].premiumVolume += c.selectedPlanPremium ?? 0
   })
