@@ -7,10 +7,9 @@ import RevenueChart from '../components/RevenueChart'
 import SalesByChannelChart from '../components/SalesByChannelChart'
 import CustomerSegmentsChart from '../components/CustomerSegmentsChart'
 import TopProductsTable from '../components/TopProductsTable'
-import RecentDealsTable from '../components/RecentDealsTable'
 import FunnelChart from '../components/FunnelChart'
 
-const kpiColors = ['#4DA3FF', '#7C5CFC', '#2DD4BF', '#FB923C']
+const kpiColors = ['#4DA3FF', '#7C5CFC', '#FB923C', '#2DD4BF', '#EAB308']
 
 function SkeletonCard({ className = '' }: { className?: string }) {
   return (
@@ -38,9 +37,9 @@ export default function Dashboard({ contacts, dateRange, onDateRangeChange }: Pr
 
       <main className="flex-1 overflow-y-auto px-8 py-6">
         {/* KPI Row */}
-        <div className="grid grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-5 gap-4 mb-6">
           {loading
-            ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
+            ? Array.from({ length: 5 }).map((_, i) => <SkeletonCard key={i} />)
             : data.kpis.map((metric, i) => (
                 <KPICard key={metric.label} metric={metric} accentColor={kpiColors[i]} />
               ))}
@@ -62,10 +61,9 @@ export default function Dashboard({ contacts, dateRange, onDateRangeChange }: Pr
         </div>
 
         {/* Charts Row 2 */}
-        <div className="grid grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-2 gap-4 mb-4">
           {loading ? (
             <>
-              <SkeletonCard className="h-72" />
               <SkeletonCard className="h-72" />
               <SkeletonCard className="h-72" />
             </>
@@ -73,7 +71,6 @@ export default function Dashboard({ contacts, dateRange, onDateRangeChange }: Pr
             <>
               <CustomerSegmentsChart data={data.metalLevels} />
               <FunnelChart data={data.stateBreakdown} />
-              <RecentDealsTable data={data.contacts.slice(0, 5)} />
             </>
           )}
         </div>

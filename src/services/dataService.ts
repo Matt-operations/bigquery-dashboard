@@ -43,14 +43,16 @@ async function fetchContacts(dateRange: DateRange): Promise<Contact[]> {
 function buildKPIs(contacts: Contact[]): KPIMetric[] {
   const shortForms = contacts.filter(c => !c.selectedPlanName).length
   const fullForms = contacts.filter(c => !!c.selectedPlanName).length
+  const sfToFull = contacts.filter(c => !!c.selectedPlanName && c.resubmissionCount > 0).length
   const converted = contacts.filter(c => c.converted === 'Yes').length
   const convRate = fullForms > 0 ? (converted / fullForms) * 100 : 0
 
   return [
-    { label: 'Short Forms',      value: shortForms.toLocaleString(),  change: 0, changeLabel: 'vs last period' },
-    { label: 'Full Forms',       value: fullForms.toLocaleString(),   change: 0, changeLabel: 'vs last period' },
-    { label: 'Conversions',      value: converted.toLocaleString(),   change: 0, changeLabel: 'vs last period' },
-    { label: 'Conversion Rate',  value: `${convRate.toFixed(1)}%`,    change: 0, changeLabel: 'of full forms', suffix: '%' },
+    { label: 'Short Forms',     value: shortForms.toLocaleString(),  change: 0, changeLabel: 'vs last period' },
+    { label: 'Full Forms',      value: fullForms.toLocaleString(),   change: 0, changeLabel: 'vs last period' },
+    { label: 'SF → Full Form',  value: sfToFull.toLocaleString(),    change: 0, changeLabel: 'resubmitted leads' },
+    { label: 'Conversions',     value: converted.toLocaleString(),   change: 0, changeLabel: 'vs last period' },
+    { label: 'Conversion Rate', value: `${convRate.toFixed(1)}%`,    change: 0, changeLabel: 'of full forms', suffix: '%' },
   ]
 }
 
