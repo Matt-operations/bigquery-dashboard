@@ -43,7 +43,12 @@ async function fetchContacts(dateRange: DateRange): Promise<Contact[]> {
 function buildKPIs(contacts: Contact[]): KPIMetric[] {
   const shortForms = contacts.filter(c => !c.selectedPlanName).length
   const fullForms = contacts.filter(c => !!c.selectedPlanName).length
-  const sfToFull = contacts.filter(c => !!c.selectedPlanName && c.resubmissionCount > 0).length
+  const sfToFull = contacts.filter(c => {
+    if (!c.selectedPlanName || !c.submissionDate || !c.created) return false
+    const received = new Date(c.created).toDateString()
+    const submitted = new Date(c.submissionDate).toDateString()
+    return received !== submitted
+  }).length
   const converted = contacts.filter(c => c.converted === 'Yes').length
   const convRate = fullForms > 0 ? (converted / fullForms) * 100 : 0
 
